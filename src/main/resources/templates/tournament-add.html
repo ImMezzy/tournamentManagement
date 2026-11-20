@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<header th:replace="~{fragments/navbar}"></header>
+<main id="main-content" class="container">
+    <h1 th:text="${formHeading}">Новый турнир</h1>
+    <form class="stack" th:action="@{/tournaments}" method="post"
+          th:object="${tournamentModel}" novalidate>
+        <div role="alert" th:if="${#fields.hasAnyErrors()}">Исправьте отмеченные поля.</div>
+
+        <label for="title">Название
+            <input id="title" type="text" th:field="*{title}" maxlength="100"
+                   th:attr="aria-invalid=${#fields.hasErrors('title')}">
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Ошибка названия</span>
+        </label>
+        <label for="description">Описание
+            <textarea id="description" rows="6" th:field="*{description}" maxlength="100"></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Ошибка описания</span>
+        </label>
+        <label for="maxParticipants">Максимальное количество участников
+            <input id="maxParticipants" type="number" min="2" max="64" th:field="*{maxParticipants}">
+            <span th:if="${#fields.hasErrors('maxParticipants')}" th:errors="*{maxParticipants}">Ошибка количества участников</span>
+        </label>
+        <label for="participantCount">Количество участников
+            <input id="participantCount" type="number" min="2" max="64" th:field="*{participantCount}">
+            <span th:if="${#fields.hasErrors('participantCount')}" th:errors="*{participantCount}">Ошибка количества участников</span>
+        </label>
+        <label for="prizeFund">Призовой фонд
+            <input id="prizeFund" type="number" min="2" max="64" th:field="*{prizeFund}">
+            <span th:if="${#fields.hasErrors('prizeFund')}" th:errors="*{prizeFund}">Ошибка призового фонда</span>
+        </label>
+        <label for="dateTime">Дата и время начала
+            <input id="dateTime" type="datetime-local" th:field="*{dateTime}">
+            <span th:if="${#fields.hasErrors('dateTime')}" th:errors="*{dateTime}">Ошибка даты и времени</span>
+        </label>
+        <label for="location">Место проведения
+            <input id="location" type="text" th:field="*{location}" maxlength="100">
+            <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Ошибка места проведения</span>
+        </label>
+        <label for="format">Формат
+            <input id="format" type="text" th:field="*{format}" maxlength="100">
+            <span th:if="${#fields.hasErrors('format')}" th:errors="*{format}">Ошибка формата</span>
+        </label>
+        <button type="submit" th:text="${submitLabel}">Создать турнир</button>
+    </form>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

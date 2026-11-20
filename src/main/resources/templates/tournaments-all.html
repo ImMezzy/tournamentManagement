@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+
+<header th:replace="~{fragments/navbar}"></header>
+
+<main id="main-content" class="container">
+    <h1>Турниры по UNO</h1>
+    <p>Выберите турнир и посмотрите подробную информацию</p>
+    <div class="grid" th:if="${!#lists.isEmpty(tournaments)}">
+        <article class="card" th:each="tournament : ${tournaments}">
+            <h2 th:text="${tournament.title}">
+                Название турнира
+            </h2>
+            <p>
+                <strong>Участники:</strong>
+                <span th:text="|${tournament.participantCount} из ${tournament.maxParticipants}|">
+                    0 из 0
+                </span>
+            </p>
+            <p>
+                <strong>Призовой фонд:</strong>
+                <span th:text="|${tournament.prizeFund} ₽|">
+                    0 ₽
+                </span>
+            </p>
+            <p>
+                <strong>Дата и время:</strong>
+                <span th:text="${#temporals.format(tournament.dateTime, 'dd.MM.yyyy, HH:mm')}">
+                    Дата проведения
+                </span>
+            </p>
+            <p>
+                <strong>Место:</strong>
+                <span th:text="${tournament.location}">
+                    Место проведения
+                </span>
+            </p>
+            <p>
+                <strong>Статус:</strong>
+                <span th:text="${tournament.registrationStatus()}">
+                    Статус регистрации
+                </span>
+            </p>
+            <a th:href="@{/tournaments/details(name=${tournament.title})}">
+                Подробнее
+            </a>
+        </article>
+    </div>
+    <p th:if="${#lists.isEmpty(tournaments)}">
+        Турниры пока не добавлены.
+    </p>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

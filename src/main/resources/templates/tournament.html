@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<header th:replace="~{fragments/navbar}"></header>
+<main id="main-content" class="container">
+    <article class="card">
+        <h1 th:text="${tournament.title}">
+            Название турнира
+        </h1>
+        <p th:text="${tournament.description}">
+            Полное описание турнира
+        </p>
+        <p>
+            <strong>Количество участников:</strong>
+            <span th:text="|${tournament.participantCount} из ${tournament.maxParticipants}|">
+                0 из 0
+            </span>
+        </p>
+        <p>
+            <strong>Призовой фонд:</strong>
+            <span th:text="|${tournament.prizeFund} ₽|">
+                0 ₽
+            </span>
+        </p>
+        <p>
+            <strong>Дата и время:</strong>
+            <span th:text="${#temporals.format(tournament.dateTime, 'dd.MM.yyyy, HH:mm')}">
+                Дата проведения
+            </span>
+        </p>
+        <p>
+            <strong>Место проведения:</strong>
+            <span th:text="${tournament.location}">
+                Место проведения
+            </span>
+        </p>
+        <p>
+            <strong>Формат:</strong>
+            <span th:text="${tournament.format}">
+                Формат турнира
+            </span>
+        </p>
+        <p>
+            <strong>Статус:</strong>
+            <span th:text="${tournament.registrationStatus()}">
+                Статус регистрации
+            </span>
+        </p>
+    </article>
+    <a th:href="@{/tournaments}">
+        Вернуться к списку турниров
+    </a>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
